@@ -14,7 +14,7 @@ class TextViewController: UIViewController {
     var counter = 0
     let textArray: [String] = [ "One shot. Two shots." , "The sounds echo through the halls." ]
     var player: AVAudioPlayer?
-    var tap : UITapGestureRecognizer!
+    
     
     @IBOutlet weak var storyTextView: UITextView!
     //change
@@ -23,15 +23,20 @@ class TextViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-         tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+       let textViewRecognizer = UITapGestureRecognizer()
+        //problems: tap gesture recognizer not de-enabling
+        //text view does not respond to tap
+        //also music still plays when back pressed
+         //let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        //let tapTextField = UITapGestureRecognizer(target: self.storyTextView, action: #selector(handleTap))
         // Do any additional setup after loading the view, typically from a nib.
         //self.navigationController?.isNavigationBarHidden = false 
-        
-       
+        //let tap = UITapGestureRecognizer(self, action: #selector(handleTap), for: UIControlEvents.touchDown)
+       textViewRecognizer.addTarget(self, action: #selector(tappedTextView(_:)))
         //tap.delegate = self // This is not required
-        view.addGestureRecognizer(tap)
-        
+        //view.addGestureRecognizer(tap)
+        //view.addGestureRecognizer(tapTextField)
+        storyTextView.addGestureRecognizer(textViewRecognizer)
         playSound(soundName: "PenitentFeelings", extensionString: "mp3")
     }
 
@@ -42,7 +47,8 @@ class TextViewController: UIViewController {
    
     
     
-    @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
+    
+    @objc func tappedTextView(_ sender: UITapGestureRecognizer) {
        // self.view.isUserInteractionEnabled = true
        //self.view.isUserInteractionEnabled = false
        // tap.isEnabled = false
