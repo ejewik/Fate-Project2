@@ -12,7 +12,7 @@ import AVFoundation
 class TextViewController: UIViewController {
     
     var counter = 0
-    let textArray: [String] = [ "One shot. Two shots." , "The sounds echo through the halls." ]
+    let textArray: [String] = [ "One shot. Two shots. \n The blasts echo off of the walls." , "Why am I running?" ]
     var player: AVAudioPlayer?
     
     
@@ -37,7 +37,7 @@ class TextViewController: UIViewController {
         //view.addGestureRecognizer(tap)
         //view.addGestureRecognizer(tapTextField)
         storyTextView.addGestureRecognizer(textViewRecognizer)
-        playSound(soundName: "PenitentFeelings", extensionString: "mp3")
+        playSound(soundName: "NightMusings", extensionString: "mp3")
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,7 +68,7 @@ class TextViewController: UIViewController {
         
         if counter < textArray.count {
         
-       
+         storyTextView.text = ""
          var iter = textArray[counter].makeIterator()          // Swift 4
          var characterCounter = textArray[counter].count
 //        while let c = iter.next() {
@@ -95,7 +95,7 @@ class TextViewController: UIViewController {
             })
         
         
-            storyTextView.text = textArray[counter] //
+           // storyTextView.text = textArray[counter] //going to this first don't know why?
           //  storyTextView.animate(newText: storyTextView.text ?? textArray[counter], characterDelay: 0.1)
         counter += 1
         }
