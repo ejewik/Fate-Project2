@@ -41,15 +41,54 @@ class TextViewController: UIViewController {
     
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
 
+//        var currentText = textArray[counter]
+//
+//        let middle = currentText.index(currentText.startIndex, offsetBy: currentText.characters.count / 2)
+//
+//        for index in letters.characters.indices {
+//
+//            // to traverse to half the length of string
+//            if index == middle { break }  // s, t, r
+//
+//            print(textArray[counter][index])  // s, t, r, i, n, g
+//        }
+//
         
         
-        if counter < textArray.count {
-            storyTextView.text = textArray[counter] //
-            storyTextView.animate(newText: storyTextView.text ?? textArray[counter], characterDelay: 0.1)
-        counter += 1
+        
+       
+         var iter = textArray[counter].makeIterator()          // Swift 4
+         var characterCounter = textArray[counter].count
+//        while let c = iter.next() {
+//            print(c)
+//        }
+
+        //let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: <#T##(Timer) -> Void#>)
+       
+//        let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
+//            let c = iter.next()
+//           // storyTextView.text.append
+//            }})
+        
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
             
-            
-        }
+            if let c = iter.next()
+            {
+                
+            self.storyTextView.text = "\(self.storyTextView.text!)\(c)"
+            print(c)
+                
+            }
+            //print(self.storyTextView.text)
+            })
+        
+//        if counter < textArray.count {
+//            storyTextView.text = textArray[counter] //
+//            storyTextView.animate(newText: storyTextView.text ?? textArray[counter], characterDelay: 0.1)
+//        counter += 1
+//
+//
+//        }
     }
    
     
@@ -89,24 +128,24 @@ extension TextViewController {
     }
 }
 
-extension UITextView {
-    
-    func animate(newText: String, characterDelay: TimeInterval) {
-
-        DispatchQueue.main.sync {
-
-            self.text = ""
-
-            for (index, character) in newText.characters.enumerated() {
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + characterDelay * Double(index)) {
-                    self.text?.append(character) // animation function is running at same time
-
-                    print("characterDelay \(characterDelay) index \(index)")
-                }
-            }
-        }
-    }
+//extension UITextView {
+//
+//    func animate(newText: String, characterDelay: TimeInterval) {
+//
+//        DispatchQueue.main.sync {
+//
+//            self.text = ""
+//
+//            for (index, character) in newText.characters.enumerated() {
+//
+//                DispatchQueue.main.asyncAfter(deadline: .now() + characterDelay * Double(index)) {
+//                    self.text?.append(character) // animation function is running at same time
+//
+//                    print("characterDelay \(characterDelay) index \(index)")
+//                }
+//            }
+//        }
+//    }
 
 //    func animate(newText: String, characterDelay: TimeInterval) {
 //        var a: Int?
