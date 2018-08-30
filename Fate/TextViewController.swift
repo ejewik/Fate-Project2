@@ -14,6 +14,7 @@ class TextViewController: UIViewController {
     var counter = 0
     let textArray: [String] = [ "One shot. Two shots." , "The sounds echo through the halls." ]
     var player: AVAudioPlayer?
+    var tap : UITapGestureRecognizer!
     
     @IBOutlet weak var storyTextView: UITextView!
     //change
@@ -22,10 +23,12 @@ class TextViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+         tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         // Do any additional setup after loading the view, typically from a nib.
         //self.navigationController?.isNavigationBarHidden = false 
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+       
         //tap.delegate = self // This is not required
         view.addGestureRecognizer(tap)
         
@@ -40,7 +43,10 @@ class TextViewController: UIViewController {
     
     
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
-
+       // self.view.isUserInteractionEnabled = true
+       //self.view.isUserInteractionEnabled = false
+       // tap.isEnabled = false
+        
 //        var currentText = textArray[counter]
 //
 //        let middle = currentText.index(currentText.startIndex, offsetBy: currentText.characters.count / 2)
@@ -54,7 +60,7 @@ class TextViewController: UIViewController {
 //        }
 //
         
-        
+        if counter < textArray.count {
         
        
          var iter = textArray[counter].makeIterator()          // Swift 4
@@ -82,13 +88,17 @@ class TextViewController: UIViewController {
             //print(self.storyTextView.text)
             })
         
-//        if counter < textArray.count {
-//            storyTextView.text = textArray[counter] //
-//            storyTextView.animate(newText: storyTextView.text ?? textArray[counter], characterDelay: 0.1)
-//        counter += 1
+        
+            storyTextView.text = textArray[counter] //
+          //  storyTextView.animate(newText: storyTextView.text ?? textArray[counter], characterDelay: 0.1)
+        counter += 1
+        }
 //
 //
 //        }
+//        sender?.isEnabled = true
+//        self.view.isUserInteractionEnabled = true
+        //tap.isEnabled = true
     }
    
     
