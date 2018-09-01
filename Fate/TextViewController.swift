@@ -9,12 +9,12 @@
 import UIKit
 import AVFoundation
 
-class TextViewController: UIViewController {
+class TextViewController: UIViewController , UIGestureRecognizerDelegate{
     
     var counter = 0
-    let textArray: [String] = [ "One shot. Two shots. \n The blasts echo off of the walls." , "Why am I running?" ]
+    let textArray: [String] = [ "\n\n\n     One shot. Two shots. \n     The blasts echo off of the walls." , "\n\n\n     Why am I running?" ]
     var player: AVAudioPlayer?
-    
+    var isTapEnabled = true
     
     @IBOutlet weak var storyTextView: UITextView!
     //change
@@ -27,17 +27,16 @@ class TextViewController: UIViewController {
         //problems: tap gesture recognizer not de-enabling
         //text view does not respond to tap
         //also music still plays when back pressed
-         //let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        //let tapTextField = UITapGestureRecognizer(target: self.storyTextView, action: #selector(handleTap))
-        // Do any additional setup after loading the view, typically from a nib.
-        //self.navigationController?.isNavigationBarHidden = false 
-        //let tap = UITapGestureRecognizer(self, action: #selector(handleTap), for: UIControlEvents.touchDown)
+        
        textViewRecognizer.addTarget(self, action: #selector(tappedTextView(_:)))
+        
         //tap.delegate = self // This is not required
-        //view.addGestureRecognizer(tap)
-        //view.addGestureRecognizer(tapTextField)
+        
+        
         storyTextView.addGestureRecognizer(textViewRecognizer)
-        playSound(soundName: "NightMusings", extensionString: "mp3")
+        
+        textViewRecognizer.delegate = self
+        playSound(soundName: "PenitentFeelings", extensionString: "mp3")
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,66 +44,53 @@ class TextViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if isTapEnabled  {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
     
     
     
     @objc func tappedTextView(_ sender: UITapGestureRecognizer) {
-       // self.view.isUserInteractionEnabled = true
-       //self.view.isUserInteractionEnabled = false
-       // tap.isEnabled = false
-        
-//        var currentText = textArray[counter]
-//
-//        let middle = currentText.index(currentText.startIndex, offsetBy: currentText.characters.count / 2)
-//
-//        for index in letters.characters.indices {
-//
-//            // to traverse to half the length of string
-//            if index == middle { break }  // s, t, r
-//
-//            print(textArray[counter][index])  // s, t, r, i, n, g
-//        }
-//
+ 
+        isTapEnabled = true
+
         
         if counter < textArray.count {
-        
+     //   isTapEnabled = false
          storyTextView.text = ""
          var iter = textArray[counter].makeIterator()          // Swift 4
          var characterCounter = textArray[counter].count
-//        while let c = iter.next() {
-//            print(c)
-//        }
 
-        //let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: <#T##(Timer) -> Void#>)
-       
-//        let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
-//            let c = iter.next()
-//           // storyTextView.text.append
-//            }})
-        
         let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
-            
+            // why does it skip over timer once?
             if let c = iter.next()
             {
                 
-            self.storyTextView.text = "\(self.storyTextView.text!)\(c)"
+            self.storyTextView.text = "\(self.storyTextView.text!)\(c)" //hits istapenabled, then character, then counter, then istapenabled, why not gesturerecognizershouldbegin?
             print(c)
                 
             }
-            //print(self.storyTextView.text)
+           // self.isTapEnabled = true
+            
+            if iter. == nil { //but need current iter value...
+                self.isTapEnabled = true
+            }
             })
         
         
-           // storyTextView.text = textArray[counter] //going to this first don't know why?
-          //  storyTextView.animate(newText: storyTextView.text ?? textArray[counter], characterDelay: 0.1)
+          
         counter += 1
         }
-//
-//
-//        }
-//        sender?.isEnabled = true
-//        self.view.isUserInteractionEnabled = true
-        //tap.isEnabled = true
+
+        
+        isTapEnabled = false
+        
     }
    
     
@@ -143,6 +129,8 @@ extension TextViewController {
         }
     }
 }
+
+
 
 //extension UITextView {
 //
