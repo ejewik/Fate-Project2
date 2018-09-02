@@ -59,10 +59,10 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
     @objc func tappedTextView(_ sender: UITapGestureRecognizer) {
  
         isTapEnabled = true
-
+        var c : Character? = nil
         
         if counter < textArray.count {
-     //   isTapEnabled = false
+        isTapEnabled = false
          storyTextView.text = ""
          var iter = textArray[counter].makeIterator()          // Swift 4
          var characterCounter = textArray[counter].count
@@ -71,16 +71,25 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
             // why does it skip over timer once?
             if let c = iter.next()
             {
+            
+            
+            
+                self.isTapEnabled = false
                 
             self.storyTextView.text = "\(self.storyTextView.text!)\(c)" //hits istapenabled, then character, then counter, then istapenabled, why not gesturerecognizershouldbegin?
             print(c)
                 
+                
+            }
+            else {
+                self.isTapEnabled = true
             }
            // self.isTapEnabled = true
             
-            if iter. == nil { //but need current iter value...
-                self.isTapEnabled = true
-            }
+//            if c == nil { //but need current iter value...
+//            self.isTapEnabled = true // c error: outside of scope?
+//            //}
+            
             })
         
         
@@ -129,8 +138,6 @@ extension TextViewController {
         }
     }
 }
-
-
 
 //extension UITextView {
 //
