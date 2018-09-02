@@ -11,8 +11,22 @@ import AVFoundation
 
 class TextViewController: UIViewController , UIGestureRecognizerDelegate{
     
+    //read text data
+    
+//    let file = "file.txt" //this is the file. we will write to and read from it
+//
+//    let text = "some text" //just a text
+//
+//    let path = Bundle.main.path(forResource: "data", ofType: "txt") // file path for file "data.txt"
+//    var text = String(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil)!
+    
+    
+    
+    
+   
+    
     var counter = 0
-    let textArray: [String] = [ "\n\n\n     One shot. Two shots. \n     The blasts echo off of the walls." , "\n\n\n     Why am I running?" ]
+    var textArray: [String] = []
     var player: AVAudioPlayer?
     var isTapEnabled = true
     
@@ -23,6 +37,51 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let data = try Data(contentsOf:url)
+//        let attibutedString = try NSAttributedString(data: data, documentAttributes: nil)
+//        let fullText = attibutedString.string
+//        let readings = fullText.components(separatedBy: CharacterSet.newlines)
+//        for line in readings { // do not use ugly C-style loops in Swift
+//            let clientData = line.components(separatedBy: "\t")
+//            dictClients["FirstName"] = "\(clientData)"
+//            arrayClients.append(dictClients)
+        
+//        if let path = Bundle.main.path(forResource: "TestStory", ofType: "rtf") {
+//            do {
+//                let data = try String(contentsOfFile: path, encoding: .)
+        
+//                let attibutedString = try NSAttributedString(data: data, documentAttributes: nil)
+//                        let fullText = attibutedString.string
+//                        let readings = fullText.components(separatedBy: CharacterSet.newlines)
+//                        for line in readings { // do not use ugly C-style loops in Swift
+//                            let clientData = line.components(separatedBy: "\t")
+//                            dictClients["FirstName"] = "\(clientData)"
+//                            arrayClients.append(dictClients)
+//                }
+                
+                
+//                textArray = data.components(separatedBy: "(new)")
+//                //textArray = myStrings.(separator: "(new)")
+//            } catch {
+//                print(error)
+//                print("not working")
+//            }
+//        }
+        
+        if let rtfPath = Bundle.main.url(forResource: "TestStory", withExtension: "rtf") {
+            do {
+                let attributedStringWithRtf: NSAttributedString = try NSAttributedString(url: rtfPath, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf], documentAttributes: nil)
+                
+                let textString = attributedStringWithRtf.string.replacingOccurrences(of: "\\n", with: "\n")
+                textArray = textString.components(separatedBy: "(new)")
+                //self.storyTextView.attributedText = attributedStringWithRtf
+            } catch let error {
+                print("Got an error \(error)")
+            }
+        }
+        
+        
        let textViewRecognizer = UITapGestureRecognizer()
         //problems: tap gesture recognizer not de-enabling
         //text view does not respond to tap
@@ -37,6 +96,9 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
         
         textViewRecognizer.delegate = self
         playSound(soundName: "PenitentFeelings", extensionString: "mp3")
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B18E6EA213BCABA00439700 /* TestStory.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4B18E6E9213BCABA00439700 /* TestStory.rtf */; };
 		4BB336832133AD2D0082FCE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB336822133AD2D0082FCE3 /* AppDelegate.swift */; };
 		4BB336852133AD2D0082FCE3 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB336842133AD2D0082FCE3 /* TextViewController.swift */; };
 		4BB336882133AD2D0082FCE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BB336862133AD2D0082FCE3 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B18E6E9213BCABA00439700 /* TestStory.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TestStory.rtf; sourceTree = "<group>"; };
 		4BB3367F2133AD2D0082FCE3 /* Fate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BB336822133AD2D0082FCE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BB336842133AD2D0082FCE3 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 		4BB336812133AD2D0082FCE3 /* Fate */ = {
 			isa = PBXGroup;
 			children = (
+				4B18E6E9213BCABA00439700 /* TestStory.rtf */,
 				4BB336992134C8580082FCE3 /* PenitentFeelings.mp3 */,
 				4BB3369D2134D57B0082FCE3 /* bluescale.wav */,
 				4BB3369F2134D6200082FCE3 /* NightMusings.mp3 */,
@@ -140,6 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B18E6EA213BCABA00439700 /* TestStory.rtf in Resources */,
 				4BB336A02134D6200082FCE3 /* NightMusings.mp3 in Resources */,
 				4BB336902133AD2F0082FCE3 /* LaunchScreen.storyboard in Resources */,
 				4BB3368D2133AD2F0082FCE3 /* Assets.xcassets in Resources */,
