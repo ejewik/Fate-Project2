@@ -11,23 +11,17 @@ import AVFoundation
 
 class TextViewController: UIViewController , UIGestureRecognizerDelegate{
     
-    //read text data
-    
-//    let file = "file.txt" //this is the file. we will write to and read from it
-//
-//    let text = "some text" //just a text
-//
-//    let path = Bundle.main.path(forResource: "data", ofType: "txt") // file path for file "data.txt"
-//    var text = String(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil)!
-    
-    
-    
-    
    
+    
+    
+    var timer : Timer = Timer()
+    
+    
     
     var counter = 0
     var textArray: [String] = []
     var player: AVAudioPlayer?
+    
     var isTapEnabled = true
     
     @IBOutlet weak var storyTextView: UITextView!
@@ -38,36 +32,7 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let data = try Data(contentsOf:url)
-//        let attibutedString = try NSAttributedString(data: data, documentAttributes: nil)
-//        let fullText = attibutedString.string
-//        let readings = fullText.components(separatedBy: CharacterSet.newlines)
-//        for line in readings { // do not use ugly C-style loops in Swift
-//            let clientData = line.components(separatedBy: "\t")
-//            dictClients["FirstName"] = "\(clientData)"
-//            arrayClients.append(dictClients)
-        
-//        if let path = Bundle.main.path(forResource: "TestStory", ofType: "rtf") {
-//            do {
-//                let data = try String(contentsOfFile: path, encoding: .)
-        
-//                let attibutedString = try NSAttributedString(data: data, documentAttributes: nil)
-//                        let fullText = attibutedString.string
-//                        let readings = fullText.components(separatedBy: CharacterSet.newlines)
-//                        for line in readings { // do not use ugly C-style loops in Swift
-//                            let clientData = line.components(separatedBy: "\t")
-//                            dictClients["FirstName"] = "\(clientData)"
-//                            arrayClients.append(dictClients)
-//                }
-                
-                
-//                textArray = data.components(separatedBy: "(new)")
-//                //textArray = myStrings.(separator: "(new)")
-//            } catch {
-//                print(error)
-//                print("not working")
-//            }
-//        }
+
         
         if let rtfPath = Bundle.main.url(forResource: "TestStory", withExtension: "rtf") {
             do {
@@ -95,9 +60,9 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
         storyTextView.addGestureRecognizer(textViewRecognizer)
         
         textViewRecognizer.delegate = self
-        playSound(soundName: "PenitentFeelings", extensionString: "mp3")
+        playSound(soundName: "hitman", extensionString: "mp3")
         
-        
+        player?.numberOfLoops = -1
         
     }
 
@@ -108,20 +73,27 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
    
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if isTapEnabled  {
+            print("gesture recognizer: true")
             return true
+            
         }
         else {
+            print("gesture recognizer: false")
             return false
+           
         }
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+    }
     
     
     
     @objc func tappedTextView(_ sender: UITapGestureRecognizer) {
  
-        isTapEnabled = true
-        var c : Character? = nil
+        //isTapEnabled = true
+        //var c : Character? = nil
         
         if counter < textArray.count {
         isTapEnabled = false
@@ -129,22 +101,37 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
          var iter = textArray[counter].makeIterator()          // Swift 4
          var characterCounter = textArray[counter].count
 
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.07, repeats: true, block: { _ in
             // why does it skip over timer once?
             if let c = iter.next()
             {
             
             
             
-                self.isTapEnabled = false
+               self.isTapEnabled = false
+               
                 
             self.storyTextView.text = "\(self.storyTextView.text!)\(c)" //hits istapenabled, then character, then counter, then istapenabled, why not gesturerecognizershouldbegin?
             print(c)
+                
+//                switch self.textArray[self.counter] {
+//                case let str where str.contains("cm"):
+//
+//                    self.playSound(soundName: "hitman", extensionString: "mp3")
+//
+//                default:
+//                    print("switch statement audio player error")
+                
+                    
+//                }
                 
                 
             }
             else {
                 self.isTapEnabled = true
+                self.timer.invalidate()
+                
+                // when second line appears, if let c block executes, then else bloc, then if let, back and forth whyyyyy possible explanation: is the previous iterator also going? that doesn't make sense though bc the iterator shouldn't exist anymore... oh but there's nothing to stop the timer...
             }
            // self.isTapEnabled = true
             
@@ -160,7 +147,7 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
         }
 
         
-        isTapEnabled = false
+        //isTapEnabled = false
         
     }
    
@@ -169,6 +156,7 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
     {
         
     }
+    
 
 
 }
@@ -193,7 +181,12 @@ extension TextViewController {
             
             guard let player = player else { return }
             
+            if player.isPlaying == false {
+            
             player.play()
+                
+            }
+            
             
         } catch let error {
             print(error.localizedDescription)
