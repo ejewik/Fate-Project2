@@ -32,7 +32,14 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+       
+        navigationController?.navigationBar.isTranslucent = false
+        
+        navigationController?.navigationBar.barTintColor = UIColorFromRGB(rgbValue: 0x23717F)
+        
+        navigationController?.navigationBar.tintColor = UIColorFromRGB(rgbValue: 0x46E2FF)
         
         if let rtfPath = Bundle.main.url(forResource: "TestStory", withExtension: "rtf") {
             do {
@@ -154,7 +161,8 @@ class TextViewController: UIViewController , UIGestureRecognizerDelegate{
     
     @IBAction func unwindWithSegue(_ segue: UIStoryboardSegue)
     {
-        
+        player?.stop()
+        print("Music stopped") //okee not working...
     }
     
 
@@ -193,6 +201,17 @@ extension TextViewController {
         }
     }
 }
+
+func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+    return UIColor(
+        red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+        green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+        blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+        alpha: CGFloat(1.0)
+    )
+}
+
+
 
 //extension UITextView {
 //
